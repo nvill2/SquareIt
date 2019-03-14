@@ -1,0 +1,87 @@
+------------------------------------------
+таблицы
+------------------------------------------
+USE [temp]
+GO
+
+/****** Object:  Table [dbo].[Category]    Script Date: 3/14/2019 6:48:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Category](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nchar](10) NULL,
+ CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [temp]
+GO
+
+/****** Object:  Table [dbo].[Products]    Script Date: 3/14/2019 6:49:03 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Products](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nchar](10) NULL,
+ CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [temp]
+GO
+
+/****** Object:  Table [dbo].[ProductCategory]    Script Date: 3/14/2019 6:49:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ProductCategory](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[IdProduct] [int] NULL,
+	[IdCategory] [int] NULL,
+ CONSTRAINT [PK_ProductCategory] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+	
+---------------------
+запрос
+---------------------
+SELECT p.Name, c.Name
+FROM 
+Products p
+FULL JOIN ProductCategory pc ON p.Id = pc.IdProduct
+LEFT JOIN Category c ON pc.IdCategory = c.Id
+ORDER BY p.Name
+
+---------------------
+И вывод
+---------------------	
+	
+Apple     	Fruit     
+Bread     	NULL
+Chips     	NULL
+Orange    	Fruit     
+Potato    	Vegetable 
+Tomato    	Vegetable 
+Tomato    	Fruit     
